@@ -14,6 +14,13 @@
 	    "script" : "script.cocoascript",
 	    "handler" : "createArrow"
 	},
+  {
+      "name" : "Squashed arrow",
+      "identifier" : "create-arrow-squashed",
+      "shortcut" : "ctrl shift alt a",
+      "script" : "script.cocoascript",
+      "handler" : "createArrowSquashed"
+  },
 	{
 	    "name" : "Beginning arrow",
 	    "identifier" : "create-arrow-begin",
@@ -27,11 +34,12 @@
 	    "handler" : "createArrowBothEnds"
 	}
 
-    ],    
+    ],
     "menu" : {
 	"title" : "Arrowfy",
 	"items": [
 	    "create-arrow",
+      "create-arrow-squashed",
 	    "create-arrow-begin",
 	    "create-arrow-bothends"
 	]
