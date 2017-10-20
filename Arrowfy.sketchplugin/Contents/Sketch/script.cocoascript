@@ -2,22 +2,29 @@
 // Copyright (c) 2017 Jocelyn Lin
 
 var createArrow = function(context) {
-    createArrowType(context, 0);
+    createArrowType(context, 0, false);
 }
 
 var createArrowBegin = function(context) {
-    createArrowType(context, 1);
+    createArrowType(context, 1, false);
 }
 
 var createArrowBothEnds = function(context) {
-    createArrowType(context, 2);
+    createArrowType(context, 2, false);
 }
 
 var createArrowSquashed = function(context) {
-  createArrowType(context, 3);
+  createArrowType(context, 0, true);
 }
 
-function createArrowType(context, endType) {
+var createArrowBeginSquashed = function(context) {
+    createArrowType(context, 1, true);
+}
+var createArrowBothEndsSquashed = function(context) {
+    createArrowType(context, 2, true);
+}
+
+function createArrowType(context, endType, squashed = false) {
     // endType - which end of path to attach arrowhead
     // 0=begin, 1=end of path, 2=both ends, 3=begin squashed
 
@@ -45,15 +52,12 @@ function createArrowType(context, endType) {
 	    if( layer && layer.isKindOfClass(MSShapeGroup) ){
 		layer.select_byExpandingSelection(true, false);
 		//draw at end;
-    if (endType == 3) {
-      addArrowhead(layer, 0, true);
-    }
 		if ((endType == 0) || (endType == 2)) {
-		    addArrowhead(layer, 0, false);
+		    addArrowhead(layer, 0, squashed);
 		}
 		//draw at beginning;
 		if ((endType == 1) || (endType == 2)) {
-		    addArrowhead(layer, 1, false);
+		    addArrowhead(layer, 1, squashed);
 		}
 
 		//group and name new group
