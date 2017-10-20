@@ -15,11 +15,11 @@
 	    "handler" : "createArrow"
 	},
   {
-      "name" : "Squashed End Arrow",
-      "identifier" : "create-arrow-squashed",
-      "shortcut" : "ctrl shift alt a",
-      "script" : "script.cocoascript",
-      "handler" : "createArrowSquashed"
+	    "name" : "Squashed End Arrow",
+	    "identifier" : "create-arrow-squashed",
+	    "shortcut" : "ctrl shift alt a",
+	    "script" : "script.cocoascript",
+	    "handler" : "createArrowSquashed"
   },
 	{
 	    "name" : "Beginning Arrow",
@@ -28,10 +28,10 @@
 	    "handler" : "createArrowBegin"
 	},
   {
-      "name" : "Squashed Beginning Arrow",
-      "identifier" : "create-arrow-begin-squashed",
-      "script" : "script.cocoascript",
-      "handler" : "createArrowBeginSquashed"
+	    "name" : "Squashed Beginning Arrow",
+	    "identifier" : "create-arrow-begin-squashed",
+	    "script" : "script.cocoascript",
+	    "handler" : "createArrowBeginSquashed"
   },
 	{
 	    "name" : "Both Ends",
@@ -40,10 +40,10 @@
 	    "handler" : "createArrowBothEnds"
 	},
   {
-      "name" : "Squashed Both Ends",
-      "identifier" : "create-arrow-bothends-squashed",
-      "script" : "script.cocoascript",
-      "handler" : "createArrowBothEndsSquashed"
+	    "name" : "Squashed Both Ends",
+	    "identifier" : "create-arrow-bothends-squashed",
+	    "script" : "script.cocoascript",
+	    "handler" : "createArrowBothEndsSquashed"
   }
 
     ],
@@ -51,11 +51,11 @@
 	"title" : "Arrowfy",
 	"items": [
 	    "create-arrow",
-      "create-arrow-squashed",
+	    "create-arrow-squashed",
 	    "create-arrow-begin",
-      "create-arrow-begin-squashed",
+	    "create-arrow-begin-squashed",
 	    "create-arrow-bothends",
-      "create-arrow-bothends-squashed"
+	    "create-arrow-bothends-squashed"
 	]
     }
 }
