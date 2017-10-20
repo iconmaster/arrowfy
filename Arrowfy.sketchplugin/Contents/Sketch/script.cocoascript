@@ -13,19 +13,23 @@ var createArrowBothEnds = function(context) {
     createArrowType(context, 2);
 }
 
+var createArrowSquashed = function(context) {
+  createArrowType(context, 3);
+}
+
 function createArrowType(context, endType) {
     // endType - which end of path to attach arrowhead
-    // 0=begin, 1=end of path, 2=both ends
-    
+    // 0=begin, 1=end of path, 2=both ends, 3=begin squashed
+
     // shapeType - what shape arrowhead should be
     // 0=filled triangle
-    
+
     // TBD pass in scale, allow for different ends for arrowhead
 
     var doc = context.document;
     var selectedLayers = context.selection;
     var selectedCount = selectedLayers.count();
-    
+
     var layer;
     var bezier;
 
@@ -40,26 +44,29 @@ function createArrowType(context, endType) {
 	    //check that this layer is a shape
 	    if( layer && layer.isKindOfClass(MSShapeGroup) ){
 		layer.select_byExpandingSelection(true, false);
-		//draw at end;		
+		//draw at end;
+    if (endType == 3) {
+      addArrowhead(layer, 0, true);
+    }
 		if ((endType == 0) || (endType == 2)) {
-		    addArrowhead(layer, 0);
+		    addArrowhead(layer, 0, false);
 		}
 		//draw at beginning;
 		if ((endType == 1) || (endType == 2)) {
-		    addArrowhead(layer, 1);   
+		    addArrowhead(layer, 1, false);
 		}
 
 		//group and name new group
 		var groupAction = doc.actionsController().actionForID("MSGroupAction");
 		groupAction.group(nil);
 		gr = layer.parentGroup();
-    
+
 		if ((layer.name() == 'Line') || (layer.name() == 'Path')) {
 		    gr.setName('Arrow');
 		} else {
 		    gr.setName(layer.name());
 		}
-		
+
 	    } else {
 		doc.showMessage('Oops, not a path.');
 	    }
@@ -73,7 +80,7 @@ function createArrowType(context, endType) {
     }
 }
 
-function addArrowhead(layer, endType) {
+function addArrowhead(layer, endType, squashed = false) {
     //in: layer - a path shape
     //in: endType - which end of path to attach arrowhead (0 begin, 1 end)
     //does: adds arrowhead shape to end of line
@@ -84,16 +91,20 @@ function addArrowhead(layer, endType) {
     headPath.moveToPoint(NSMakePoint(0,7));
     headPath.lineToPoint(NSMakePoint(-14,0));
     headPath.lineToPoint(NSMakePoint(0,-7));
-    headPath.closePath();    
+    headPath.closePath();
     var headShape = MSShapeGroup.shapeWithBezierPath(headPath);
 
     //scale to lineweight
     //TBD: user input
     var lineThickness = layer.style().borders().objectAtIndex(0).thickness();
     var scale = 1+(lineThickness/5);
-    headShape.frame().setWidth(Math.floor(headShape.frame().width()*scale));
+    var widthScale = 1;
+    if (squashed == true) {
+      widthScale = 0.5;
+    }
+    headShape.frame().setWidth(Math.floor(headShape.frame().width()*scale*widthScale));
     headShape.frame().setHeight(Math.floor(headShape.frame().height()*scale));
-    
+
     //color same as line
     var fill = headShape.style().addStylePartOfType(0);
     fill.setFillType(0);
@@ -103,7 +114,7 @@ function addArrowhead(layer, endType) {
     //split line depending on how curvy it is, with at least 2 points
     var path = layer.bezierPathWithTransforms();
     var count = path.elementCount()*2;
-    
+
     //hacky way of avoiding weirdly angled arrowheads for tight curves
     //handle spirals by choosing the greater number
     if (count<50) {
@@ -111,7 +122,7 @@ function addArrowhead(layer, endType) {
     }
     var length = path.length();
     var step = length/count;
-    
+
     //but also make sure a step is at minimum the arrowhead size
     var lineThickness = layer.style().borders().objectAtIndex(0).thickness();
     var scale = 1+(lineThickness/5);
@@ -132,11 +143,11 @@ function addArrowhead(layer, endType) {
     headShape.setRotation(-1*angle);
     //move center to endpoint of line
     headShape.frame().setX(endPoint.x - headShape.frame().width()/2);
-    headShape.frame().setY(endPoint.y - headShape.frame().height()/2);    
-        
+    headShape.frame().setY(endPoint.y - headShape.frame().height()/2);
+
     //add to layer
     headShape.setName('Arrowhead');
     var gr = layer.parentGroup();
-    gr.addLayers([headShape]);	
+    gr.addLayers([headShape]);
     headShape.select_byExpandingSelection(true, true);
 }
