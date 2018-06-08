@@ -8,32 +8,54 @@
     "appcast": "https://github.com/joclin/arrowfy/blob/master/.appcast.xml",
     "commands": [
 	{
-	    "name" : "End arrow",
+	    "name" : "End Arrow",
 	    "identifier" : "create-arrow",
 	    "shortcut" : "ctrl shift a",
 	    "script" : "script.cocoascript",
 	    "handler" : "createArrow"
 	},
+  {
+	    "name" : "Squashed End Arrow",
+	    "identifier" : "create-arrow-squashed",
+	    "shortcut" : "ctrl shift alt a",
+	    "script" : "script.cocoascript",
+	    "handler" : "createArrowSquashed"
+  },
 	{
-	    "name" : "Beginning arrow",
+	    "name" : "Beginning Arrow",
 	    "identifier" : "create-arrow-begin",
 	    "script" : "script.cocoascript",
 	    "handler" : "createArrowBegin"
 	},
+  {
+	    "name" : "Squashed Beginning Arrow",
+	    "identifier" : "create-arrow-begin-squashed",
+	    "script" : "script.cocoascript",
+	    "handler" : "createArrowBeginSquashed"
+  },
 	{
-	    "name" : "Both ends",
+	    "name" : "Both Ends",
 	    "identifier" : "create-arrow-bothends",
 	    "script" : "script.cocoascript",
 	    "handler" : "createArrowBothEnds"
-	}
+	},
+  {
+	    "name" : "Squashed Both Ends",
+	    "identifier" : "create-arrow-bothends-squashed",
+	    "script" : "script.cocoascript",
+	    "handler" : "createArrowBothEndsSquashed"
+  }
 
-    ],    
+    ],
     "menu" : {
 	"title" : "Arrowfy",
 	"items": [
 	    "create-arrow",
+	    "create-arrow-squashed",
 	    "create-arrow-begin",
-	    "create-arrow-bothends"
+	    "create-arrow-begin-squashed",
+	    "create-arrow-bothends",
+	    "create-arrow-bothends-squashed"
 	]
     }
 }

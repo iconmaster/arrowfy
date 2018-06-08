@@ -2,20 +2,31 @@
 // Copyright (c) 2017 Jocelyn Lin
 
 var createArrow = function(context) {
-    createArrowType(context, 0);
+    createArrowType(context, 0, false);
 }
 
 var createArrowBegin = function(context) {
-    createArrowType(context, 1);
+    createArrowType(context, 1, false);
 }
 
 var createArrowBothEnds = function(context) {
-    createArrowType(context, 2);
+    createArrowType(context, 2, false);
 }
 
-function createArrowType(context, endType) {
+var createArrowSquashed = function(context) {
+  createArrowType(context, 0, true);
+}
+
+var createArrowBeginSquashed = function(context) {
+    createArrowType(context, 1, true);
+}
+var createArrowBothEndsSquashed = function(context) {
+    createArrowType(context, 2, true);
+}
+
+function createArrowType(context, endType, squashed = false) {
     // endType - which end of path to attach arrowhead
-    // 0=begin, 1=end of path, 2=both ends
+    // 0=begin, 1=end of path, 2=both ends, 3=begin squashed
     
     // shapeType - what shape arrowhead should be
     // 0=filled triangle
@@ -42,11 +53,11 @@ function createArrowType(context, endType) {
 		layer.select_byExtendingSelection(true, false);
 		//draw at end;		
 		if ((endType == 0) || (endType == 2)) {
-		    addArrowhead(layer, 0);
+		    addArrowhead(layer, 0, squashed);
 		}
 		//draw at beginning;
 		if ((endType == 1) || (endType == 2)) {
-		    addArrowhead(layer, 1);   
+		    addArrowhead(layer, 1, squashed);
 		}
 
 		//group and name new group
@@ -73,7 +84,7 @@ function createArrowType(context, endType) {
     }
 }
 
-function addArrowhead(layer, endType) {
+function addArrowhead(layer, endType, squashed = false) {
     //in: layer - a path shape
     //in: endType - which end of path to attach arrowhead (0 begin, 1 end)
     //does: adds arrowhead shape to end of line
@@ -92,7 +103,11 @@ function addArrowhead(layer, endType) {
     //TBD: user input
     var lineThickness = layer.style().borders().objectAtIndex(0).thickness();
     var scale = 1+(lineThickness/5);
-    headShape.frame().setWidth(Math.floor(headShape.frame().width()*scale));
+    var widthScale = 1;
+    if (squashed == true) {
+      widthScale = 0.5;
+    }
+    headShape.frame().setWidth(Math.floor(headShape.frame().width()*scale*widthScale));
     headShape.frame().setHeight(Math.floor(headShape.frame().height()*scale));
     
     //color same as line
